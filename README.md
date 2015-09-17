@@ -1,5 +1,6 @@
-# Comp 598: Assignment 1 — Linear Regression
-Linear regression assignment for Comp 598 at McGill, Fall 2015
+# Linear regression
+### Comp 598: Assignment 1 — Linear Regression
+### McGill University, Fall 2015
 
 ### Dependencies
 
