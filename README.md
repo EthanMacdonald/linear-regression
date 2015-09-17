@@ -1,5 +1,6 @@
 # Linear regression
-#### Comp 598: Assignment 1, McGill University, Fall 2015
+Comp 598: Assignment 1, McGill University, Fall 2015
+Andres Felipe Rincón, Felix Dumont, Ethan Bryce Macdonald
 
 ### Dependencies
 
