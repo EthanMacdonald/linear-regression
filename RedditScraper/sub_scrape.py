@@ -9,7 +9,7 @@ while True:
 	try: 
 		if i % 20 == 0:
 			time.sleep(60)
-		r = praw.Reddit(user_agent='laptop:YnAFbPkdUgE0Ig:1.0 (by /u/ShittyAlgorithms)')
+		r = praw.Reddit(user_agent='laptop:YnAFbPkdUgE0Ig:1.0')
 		r.config.store_json_result = True
 		submissions = r.request_json(url, params=params, as_objects=False)
 		submissions['scrape_time_utc'] = time.time()
