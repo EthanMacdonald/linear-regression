@@ -24,4 +24,12 @@ Install the full scipy stack, or just numpy. Either should work.
 
 ### Start the program
 
+Clone this repo
+
+Navigate to ./data/
+
+Unzip OnlineNewsPopularity.zip
+
+cd ../
+
 Type 'python run.py'
