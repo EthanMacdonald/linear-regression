@@ -9,6 +9,8 @@ Python 2.7
 
 Numpy
 
+PRAW (Python Reddit API Wrapper — only needed for webscraping)
+
 
 ### Install Python 2.7
 
@@ -21,6 +23,9 @@ http://www.scipy.org/install.html
 
 Install the full scipy stack, or just numpy. Either should work.
 
+### Install PRAW (Python Reddit API Wrapper)
+
+https://praw.readthedocs.org
 
 ### Start the program
 
