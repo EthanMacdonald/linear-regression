@@ -10,8 +10,7 @@ functionCSV <-  function(fileNameJSON){
   jsonData4 <- jsonData4[,lapply(jsonData4,length) == lengthTrainingM]
   csvName <- sub(".json",".csv",fileNameJSON)
   write.csv(jsonData4,csvName)
-  print(dim(jsonData4[1]))
-  print(dim(jsonData4[2]))
+  
   
   
   
