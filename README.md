@@ -11,6 +11,8 @@ Numpy
 
 PRAW (Python Reddit API Wrapper — only needed for webscraping)
 
+Matplotlib
+
 
 ### Install Python 2.7
 
