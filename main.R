@@ -1,3 +1,5 @@
+#This R program creates a single csv file from a list of json files in the directory. This program selects the most relevant features
+#and the features are labelled.
 dir <- getwd()
 dir <- paste(dir, "makeOneCSVFile.R",sep = "/")
 source(dir)
@@ -14,7 +16,7 @@ csvFilesNames <- list.files(getwd())
 csvFilesNames <- csvFilesNames[grepl(".csv",csvFilesNames)]
 csvList <- sapply(csvFilesNames, read.csv, header = TRUE)
 dataset <- makeOneCSVFile(csvList, 1, length(csvFileNames))
-dataset <- dataset[, c("data.domain", "data.selftext_html","data.selftext","data.over_18","data.author", "data.score", "data.created_utc","data.title", "data.ups","data.num_comments")]
+dataset <- dataset[, c("data.domain", "data.selftext_html","data.selftext","data.over_18","data.author", "data.score", "data.created_utc","data.title", "data.ups","data.num_comments", "data.subreddit","data.url", "data.permalink","data.thumbnail")]
 title <- as.character.factor(dataset$data.title)
 title <- tolower(title)
 content <- as.character.factor(dataset$data.selftext)
