@@ -6,9 +6,7 @@ source(dir)
 dir <- getwd()
 dir <- paste(dir, "functionCSV.R", sep = "/")
 source(dir)
-dir <- getwd()
-dir <- paste(dir, "countWordInText.R", sep = "/")
-source(dir)
+
 jsonFilesNames <- list.files(getwd())
 jsonFilesNames <- jsonFilesNames[grepl(".json",jsonFilesNames)]
 lapply(jsonFilesNames, functionCSV)
