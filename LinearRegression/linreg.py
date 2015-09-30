@@ -26,13 +26,20 @@ class LinearRegression(object):
 		r, c = X.shape
 		w0 = np.transpose(np.array([[1]*c]))    
 		self.w = self._next_weight(w0, X, y, alpha,reg_factor)
+		flag=0
 		while np.sum(abs(w0 - self.w))/len(w0) > err:
 			w0 = self.w
+			#for i in w0:
+                         #       if np.isinf(i):
+                          #              flag=1
+                        #if flag==1:
+                         #       break
 			self.w = self._next_weight(w0, X, y, alpha,reg_factor)
 		return self.w
 
 	def _next_weight(self, w, X, y, alpha,reg_factor):
 		# Helper function for gradient_fit method
+		#print w
 		return w - alpha*(np.transpose(X).dot(X).dot(w)-np.transpose(X).dot(y)) - (alpha*reg_factor*w)
 
 	def predict(self, X):
@@ -41,7 +48,12 @@ class LinearRegression(object):
 			raise Exception("Please train LinearRegression object before making predictions")
 		elif self.copy:
 			X = np.copy(X)
-		return X.dot(self.w)
+                prediction = X.dot(self.w)
+		for row in prediction: # We cannot have a negative number of shares!
+                        for element in xrange(len(row)):
+                                if row[element] <0:
+                                        row[element]=0
+		return prediction
 
 	def test(self, X, Y):
 		# Reports the Mean Squared Error on a test set
@@ -57,10 +69,14 @@ class LinearRegression(object):
 		# Compares gradient descent error and closed form error
 		self.gradient_fit(X_train, y_train, alpha, err,reg_factor)
 		gradient_test = self.test(X_train, y_train)
+		gradient_test2 = self.test(X_test,y_test)
 		grad_predict = self.predict(X_test)
 		print "Gradnt Err: " + str(self.test(X_train,y_train))
+		print self.w
 		self.closed_fit(X_train, y_train,reg_factor)
 		closed_test = self.test(X_test, y_test)
 		print "Closed Err: " + str(self.test(X_train,y_train))
+		print self.w
 		closed_predict = self.predict(X_test)
-		return closed_predict, grad_predict # Returns closed prediction and grad prediction
+		#return closed_predict, grad_predict # Returns closed prediction and grad prediction
+                return grad_predict, closed_predict

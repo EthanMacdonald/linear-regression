@@ -28,9 +28,9 @@ y = np.transpose(np.array([map(y, x_data)]))
 
 
 # Assignment data
-data_dir = "data/OnlineNewsPopularity"
-csv_path = os.path.join(data_dir, "OnlineNewsPopularity.csv")
-csv = genfromtxt(csv_path, delimiter=', ', skip_header=1)
+data_dir = "data/reddit_dataset"
+csv_path = os.path.join(data_dir, "full_data_final.csv")
+csv = genfromtxt(csv_path, delimiter=',', skip_header=1)
 r, c = csv.shape
 
 X_train = []
@@ -38,18 +38,24 @@ X_test = []
 y_train = []
 y_test = []
 test_portion =0.30
+stop=0
 for i in csv:
+        stop = stop +1
+        if  stop<92000:
+                continue
         rd = random.random()
         if rd < test_portion: 
-            spl = np.array_split(i, [1, 60])
+            spl = np.array_split(i, [1, 10])
             X_test.append(spl[1])
             y_test.append(spl[2])
             
         else :
-            spl = np.array_split(i, [1, 60])
+            spl = np.array_split(i, [1, 10])
             X_train.append(spl[1])
             y_train.append(spl[2])
 
+
+print "Extraction done"
 X_train=np.array(X_train)
 y_train=np.array(y_train)
 X_test=np.array(X_test)
@@ -57,7 +63,7 @@ y_test=np.array(y_test)
 
 error =[[],[]]
 min_result = 2e+50
-
+min_i=0
 #h_split_1 = int(.33*r)
 #csv = csv[:, [1,29,60]] # Only keeps some rows
 #arrays = [np.array_split(csv, [1, 60], axis=1) for i in np.array_split(csv, [h_split_1,2*h_split_1], axis=0)] #TODO: Ask Pineau about removing the first column?
@@ -66,20 +72,25 @@ min_result = 2e+50
 #X_test = arrays[1][1]
 #y_train = arrays[0][2]
 #y_test = arrays[1][2]
-#urls = [i[0] for i in arrays]
-#for i in range(1,25) :
+#urls = [i[0] for i in arrays
+"""error_test=[[],[]]
+for i in range(1,25) :
 #   for j in range(1):
-#        result = lr.compare_error(X_train, y_train, X_valid, y_valid, math.pow(10,-17), .01,math.pow(2,-i))[0][0]
-#        error[0].append(result)
-#        error[1].append(1/(math.pow(2,i)))
-#        if result < min_result   :
-#            min_i =i
-#            min_result=result
-#        print result
-#print min_result, min_i
-i=17
-ret_closed, ret_grad= lr.compare_error(X_train, y_train, X_test, y_test, math.pow(10,-i), .000001,0)
-print ret_closed,ret_grad
+        result,result_test = lr.compare_error(X_train, y_train, X_test, y_test, math.pow(10,-i),0.000001,0)
+        result = result[0][0]
+        result_test=result_test[0][0]
+        error[0].append(result)
+        error[1].append(1/(math.pow(10,i)))
+        error_test[0].append(result_test)
+        error_test[1].append(1/(math.pow(10,i)))
+        if result < min_result   :
+            min_i =i
+            min_result=result
+        print result
+print min_result, min_i
+"""
+i=14
+ret_grad, ret_closed= lr.compare_error(X_train, y_train, X_test, y_test, math.pow(10,-i), .000001,0)
 i=1
 grad=[]
 closed=[]
@@ -92,17 +103,21 @@ while (i<min_size):
         closed.append(ret_closed[i])
         train.append(y_train[i])
     i=i+1
+print len(grad)
 #plt.plot(range(len(ret_y)),ret_y,'ro', range(len(ret_y)),ret_x,'bs')
-p1 = plt.plot(range(len(grad)),grad,'bs',markersize=5) # Plots the predictions for Gradient descent
-#p2 = plt.plot(range(len(a)),b,'ro',markersize=3)
-p3 = plt.plot(range(len(grad)),train,'yo',markersize=5) # Plots the real values of the training set
+p1 = plt.plot(range(len(grad)),grad,'bs',markersize=3, label='Gradient descent prediction') # Plots the predictions for Gradient descent
+p2 = plt.plot(range(len(grad)),closed,'ro',markersize=3, label='Closed form prediction') # Plots the predictions for Closed Form
+p3 = plt.plot(range(len(grad)),train,'yo',markersize=3, label='Actual score') # Plots the real values of the training set
 #plt.plot(range(len(ret_x)),ret_x,'bs',range(len(ret_y)),ret_y,'ro')
 
-#plt.plot(error[1], error[0], 'ro')
+#plt.plot(error[1], error[0], 'ro',markersize=3)
+#plt.plot(error_test[1], error_test[0], 'bo',markersize=3)
 #plt.xscale('log',basex=10)
-#plt.axis([1,0,0,1.53170261e+8])
-plt.title('Predicting the number of shares')
-plt.ylabel('Number of shares')
-plt.xlabel('Index (0 = most recent article)')
+#plt.yscale('log',basex=10)
+#plt.axis([1,0,1e+3,5.53170261e+9])
+plt.title('Score prediction of closed-form and gradient descent')
+plt.ylabel('Score')
+plt.xlabel('Index')
+plt.legend(loc='upper left')
 #plt.legend([p1, p2], ["Gradient descent prediction", "Actual number of shares"])
 plt.show()
