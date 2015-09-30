@@ -1,4 +1,4 @@
-#This function takes a JSON filenames as input and outputs the corresponding csv file.
+#This function input is a JSON filename and outputs the corresponding csv file.
 functionCSV <-  function(fileNameJSON){
   library(jsonlite)
   jsonData3<- fromJSON(fileNameJSON, flatten = TRUE)
